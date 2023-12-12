@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat App - User 1</title>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+    <style>
+        /* Add your CSS styles here */
+        .message-input {
+            width: 70%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .send-button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .send-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form id="messageForm">
+        <input type="text" id="messageInput" class="message-input" placeholder="Type your message...">
+        <button type="submit" class="send-button">Send</button>
+    </form>
+
+    <script>
+        const socket = io("http://localhost:3000");
+
+        socket.on("connection", () => {
+            console.log("connected");
+        });
+
+        const sendMessage = () => {
+            const messageInput = document.getElementById("messageInput");
+            const message = messageInput.value;
+            socket.emit("message", message);
+            messageInput.value = "";
+        };
+
+    </script>
+
+
+</body>
+</html>
