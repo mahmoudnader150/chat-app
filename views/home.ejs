@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f2f2f2;
+            background-color: #bfbfbf;
         }
         .chat-container {
             max-width: 600px;
@@ -93,7 +93,7 @@
 </head>
 <body>
     <div class="chat-container">
-        <div class="chat-header">Chat App</div>
+        <div class="chat-header">CHAT ROOM</div>
         <div class="chat-messages" id="messageContainer"></div>
         <div class="message-input-container">
             <input type="text" id="messageInput" class="message-input" placeholder="Type your message...">
@@ -109,7 +109,8 @@
         });
 
         socket.on("message", (data) => {
-            displayMessage("received", data);
+            const { message, timestamp } = data;
+            displayMessage("received", message, timestamp);
             console.log("message received");
         });
 
@@ -119,7 +120,7 @@
             if (message !== "") {
                 const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 displayMessage("sent", message, timestamp);
-                socket.emit("message", message);
+                socket.emit("message", { message, timestamp });
                 messageInput.value = "";
             }
         }
